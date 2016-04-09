@@ -1,0 +1,20 @@
+TODO list for the code:
+
+C++:
+interface headers
+Utility routines
+Slim memory usage and check for leaks
+own_external_numbers_I8 not implemented
+double precision switch
+element->get_part
+unsigned int conversion removal
+
+
+Python:
+Print state file order for user debugging
+
+Tutorial:
+
+Inputfile: *DATABASE_FORMAT, IBINARY=1
+Environment-Variable: export LSTC_BINARY=32ieee
+Command-line: e. g. ls971 i=input 32ieee=yes
