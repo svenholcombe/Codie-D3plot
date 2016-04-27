@@ -1478,7 +1478,7 @@ void D3plot::read_states_elem8(unsigned int iState){
   int delta = 7+dyna_neiph;
   for(int ii = start;ii < start+wordsToRead; ii+=delta){
 
-    Element* element = this->db_elements->get_elementByIndex(SHELL,iElement);
+    Element* element = this->db_elements->get_elementByIndex(SOLID,iElement);
 
     // stress tensor
     if(this->stress_read){
