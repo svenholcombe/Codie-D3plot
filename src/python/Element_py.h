@@ -47,7 +47,7 @@ extern "C" {
   CD_Element_get_nodes(CD_Element* self);
   
   static PyObject *
-  CD_Element_get_coords(CD_Element* self);
+  CD_Element_get_coords(CD_Element* self, PyObject *args, PyObject *kwds);
   
   static PyObject *
   CD_Element_get_history(CD_Element* self);
@@ -62,7 +62,7 @@ extern "C" {
     {"get_strain", (PyCFunction) CD_Element_get_strain, METH_NOARGS, "Get the strain time series of the element."},
     {"get_stress", (PyCFunction) CD_Element_get_stress, METH_NOARGS, "Get the stress time series of the element."},
     {"get_nodes", (PyCFunction) CD_Element_get_nodes, METH_NOARGS, "Get the nodes of the element."},
-    {"get_coords", (PyCFunction) CD_Element_get_coords, METH_NOARGS, "Get the coords of the element."},
+    {"get_coords", (PyCFunction) CD_Element_get_coords, METH_VARARGS, "Get the coords of the element at a given timestep."},
 	 {"get_history", (PyCFunction) CD_Element_get_history, METH_NOARGS, "Get the history vars of the element."},
     {"get_estimated_size", (PyCFunction) CD_Element_get_estimated_size, METH_NOARGS, "Get the estimated size of the element."},
    {NULL}  /* Sentinel */

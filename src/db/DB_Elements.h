@@ -6,6 +6,7 @@
 //class Element;
 class DB_Nodes;
 class DB_Parts;
+class D3plot;
 
 // includes
 #include <vector>
@@ -17,6 +18,7 @@ using namespace std;
 class DB_Elements {
 
   private:
+  D3plot* d3plot;
   DB_Nodes* db_nodes;
   DB_Parts* db_parts;
   map<int,Element*> elements2;
@@ -27,8 +29,9 @@ class DB_Elements {
   map<int,Element*> elements8ByIndex;
 
   public:
-  DB_Elements(DB_Nodes*,DB_Parts*);
+  DB_Elements(D3plot*, DB_Nodes*,DB_Parts*);
   ~DB_Elements();
+  D3plot* get_d3plot();
   DB_Nodes* get_db_nodes();
   Element* add_element(ElementType,int,vector<int>);
 

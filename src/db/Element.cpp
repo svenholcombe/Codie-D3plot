@@ -1,7 +1,9 @@
 
 #include <math.h> // sqrt
 #include <algorithm> // std::max
+#include <cmath>        // std::abs
 #include <string>
+#include "../dyna/D3plot.h"
 #include "Element.h"
 #include "Node.h"
 #include "DB_Nodes.h"
@@ -186,22 +188,50 @@ vector<float> Element::get_energy(){
  * Get the coordinates of the element, which is
  * the average of all nodes.
  */
-vector<float> Element::get_coords(){
+vector<float> Element::get_coords(int iTimestep){
   
   if(this->nodes.size() < 1)
-	throw("Element with id "+to_string(this->elementID)+" has no nodes and thus no coords.");
+    throw("Element with id "+to_string(this->elementID)+" has no nodes and thus no coords.");
+  
+  if((iTimestep != 0) & (!this->db_elements->get_d3plot()->displacement_is_read()) ){
+    throw(string("Displacements were not read yet. Please use read_states=\"disp\"."));
+  }
+  
+  if( iTimestep < 0 )
+    iTimestep = this->db_elements->get_d3plot()->get_timesteps().size() + iTimestep; // Python array style
+  
+  if( (iTimestep < 0) )
+    throw(string("Specified timestep exceeds real time step size."));
   
   DB_Nodes* db_nodes = this->db_elements->get_db_nodes();
   
+  Node* current_node = NULL;
   vector<float> coords_elem(3);
   vector<float> coords_node;
+  vector< vector<float> > disp_node; 
+  
   for(set<int>::iterator it=this->nodes.begin(); it != this->nodes.end(); ++it){
 	
-   coords_node = db_nodes->get_nodeByID(*it)->get_coords();
+   current_node = db_nodes->get_nodeByID(*it);
+   coords_node = current_node->get_coords();
 	
    coords_elem[0] += coords_node[0];
    coords_elem[1] += coords_node[1];
    coords_elem[2] += coords_node[2];
+    
+   // Coords at different timestep
+   if(iTimestep != 0){
+      
+      disp_node = current_node->get_disp();
+      
+      // Check correctness
+      if( iTimestep >= disp_node.size() )
+        throw(string("Specified timestep exceeds real time step size."));
+      
+      coords_elem[0] += disp_node[iTimestep][0];
+      coords_elem[1] += disp_node[iTimestep][1];
+      coords_elem[2] += disp_node[iTimestep][2];
+   }
     
   }
   

@@ -43,7 +43,7 @@ class Element {
   int           get_elementID();
   float         get_estimated_element_size(); // fast
   set<Node*>    get_nodes();
-  vector<float> get_coords();
+  vector<float> get_coords(int iTimestep = 0);
   vector<float> get_energy();
   vector<float> get_plastic_strain();
   vector< vector<float> > get_strain();

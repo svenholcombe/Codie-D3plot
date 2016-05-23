@@ -139,6 +139,12 @@ This function returns a time series of the stress vector. The vector contains th
 
 *return: (list of nodes) nodes of the elements*
 
+**element.get_coords(iTimestep=0)**
+
+*return: (list of flaot) Get the coordinates of the element.*
+
+You can get the coordinates of the element, which is the mean of it's nodes coordinates. If the optional flag iTimtestep != 0 then the displacements must be read in the d3plot. One also may use negative numbers like -1 for the last timestep.
+
 **element.get_history()**
 
 *return: (list of list of floats) time series of the history variable vector

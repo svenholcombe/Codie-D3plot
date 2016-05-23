@@ -153,6 +153,7 @@ class D3plot {
   DB_Nodes* get_db_nodes();
   DB_Parts* get_db_parts();
   DB_Elements* get_db_elements();
+  bool displacement_is_read();
 
 };
 

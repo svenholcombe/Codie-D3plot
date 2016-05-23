@@ -8,13 +8,15 @@
 #include "Element.h"
 #include "Node.h"
 #include "Part.h"
+#include "../dyna/d3plot.h"
 #include "../utility/TextUtility.h"
 
 /*
  * Constructor.
  */
-DB_Elements::DB_Elements(DB_Nodes* _db_nodes, DB_Parts* _db_parts){
+DB_Elements::DB_Elements(D3plot* _d3plot, DB_Nodes* _db_nodes, DB_Parts* _db_parts){
 
+  this->d3plot = _d3plot;
   this->db_nodes = _db_nodes;
   this->db_parts = _db_parts;
 
@@ -180,6 +182,13 @@ Element* DB_Elements::get_elementByIndex(int _elementType,int _elementIndex){
 
 }
 
+/*
+ * Get the d3plot
+ */
+D3plot* DB_Elements::get_d3plot(){
+   return this->d3plot;
+}
+ 
 
 /*
  * Get the node-db.

@@ -1085,15 +1085,34 @@ extern "C" {
 
   /* CD_Element FUNCTION get_coords */
   static PyObject *
-  CD_Element_get_coords(CD_Element* self){
+  CD_Element_get_coords(CD_Element* self, PyObject *args, PyObject *kwds){
   
 	 if(self->element == NULL){
       PyErr_SetString(PyExc_AttributeError,"Pointer to element is NULL.");
       return NULL;
     }
+    
+    int iTimestep = 0;
+    static char *kwlist[] = {"iTimestep",NULL}; // TODO Deprecated!
+    
+    if (! PyArg_ParseTupleAndKeywords(args, kwds, "|i", kwlist, &iTimestep)){
+        return NULL;
+    }
+      /*
+    if (!PyArg_ParseTuple(args, "|i", &iTimestep))
+      return NULL;*/
 
-    vector<float> coords = self->element->get_coords();
-
+    vector<float> coords;
+    try{
+      coords = self->element->get_coords(iTimestep);
+    } catch (const char* e){
+      PyErr_SetString(PyExc_RuntimeError, e);
+      return NULL;
+    } catch (string e){
+      PyErr_SetString(PyExc_RuntimeError, e.c_str());
+      return NULL;
+    }
+    
     int check = 0;
     PyObject* coords_list = PyList_New(coords.size());
     for(unsigned int ii=0; ii<coords.size(); ii++){

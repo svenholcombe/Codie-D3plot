@@ -31,7 +31,7 @@ D3plot::D3plot (string _filename,bool _useFemzip,vector<string> _state_variables
   this->useFemzip = _useFemzip;
   this->db_nodes = new DB_Nodes();
   this->db_parts = new DB_Parts();
-  this->db_elements = new DB_Elements(this->db_nodes,this->db_parts);
+  this->db_elements = new DB_Elements(this,this->db_nodes,this->db_parts);
   this->db_nodes->set_db_elements(this->db_elements);
 
   // Create Buffer
@@ -1822,4 +1822,11 @@ DB_Parts* D3plot::get_db_parts(){
  */
 DB_Elements* D3plot::get_db_elements(){
   return this->db_elements;
+}
+
+/*
+ * Tells whether displacements were loaded.
+ */
+bool D3plot::displacement_is_read(){
+   return this->disp_is_read;
 }
