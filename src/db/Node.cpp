@@ -4,6 +4,7 @@
 #include "Element.h"
 #include "DB_Nodes.h"
 #include "DB_Elements.h"
+#include "../dyna/d3plot.h"
 #include "../utility/TextUtility.h"
 
 /*
@@ -14,9 +15,7 @@ Node::Node(int _nodeID, vector<float> _coords,DB_Nodes* _db_nodes){
   this->nodeID = _nodeID;
   this->coords = vector<float>(_coords); //copy
   this->elements = set<Element*>();
-  this->db_nodes = db_nodes;
-  //this->disp = vector<vector<float>>();
-  //this->vel  = vector<vector<float>>();
+  this->db_nodes = _db_nodes;
 }
 
 
@@ -109,8 +108,37 @@ set<Element*> Node::get_elements(){
  * Get the coordinates of the node as an array
  * of length 3.
  */
-vector<float> Node::get_coords(){
-  return this->coords;
+vector<float> Node::get_coords(int iTimestep){
+  
+  if((iTimestep != 0) & (!this->db_nodes->get_d3plot()->displacement_is_read()) ){
+    throw(string("Displacements were not read yet. Please use read_states=\"disp\"."));
+  }
+
+  if( iTimestep < 0 )
+    iTimestep = this->db_nodes->get_d3plot()->get_timesteps().size() + iTimestep; // Python array style
+  
+  if( (iTimestep < 0) )
+    throw(string("Specified timestep exceeds real time step size."));
+  
+  if(iTimestep == 0){
+     
+     return this->coords;
+  
+  } else {
+     
+     vector<float> ret;
+     ret = this->coords;
+     
+     if( iTimestep >= this->disp.size() )
+        throw(string("Specified timestep exceeds real time step size."));
+     
+     ret[0] += this->disp[iTimestep][0];
+     ret[1] += this->disp[iTimestep][1];
+     ret[2] += this->disp[iTimestep][2];
+     
+     return ret;
+  }
+  
 }
 
 

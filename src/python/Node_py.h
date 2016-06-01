@@ -32,7 +32,7 @@ extern "C" {
   CD_Node_get_NodeID(CD_Node* self);
 
   static PyObject *
-  CD_Node_get_coords(CD_Node* self);
+  CD_Node_get_coords(CD_Node* self, PyObject *args, PyObject *kwds);
 
   static PyObject *
   CD_Node_get_disp(CD_Node* self);
@@ -48,7 +48,7 @@ extern "C" {
 
   static PyMethodDef CD_Node_methods[] = {
     {"get_id", (PyCFunction) CD_Node_get_NodeID, METH_NOARGS, "Get the node id."},
-    {"get_coords", (PyCFunction) CD_Node_get_coords, METH_NOARGS, "Get the node coordinates."},
+    {"get_coords", (PyCFunction) CD_Node_get_coords, METH_VARARGS, "Get the node coordinates."},
     {"get_disp", (PyCFunction) CD_Node_get_disp, METH_NOARGS, "Get the node displacement over time."},
     {"get_vel", (PyCFunction) CD_Node_get_vel, METH_NOARGS, "Get the node velocity over time."},
     {"get_accel", (PyCFunction) CD_Node_get_accel, METH_NOARGS, "Get the node acceleration over time."},

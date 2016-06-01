@@ -29,7 +29,7 @@ D3plot::D3plot (string _filename,bool _useFemzip,vector<string> _state_variables
   const int bytesPerWord = 4; // future argument for DP
   this->filename = _filename;
   this->useFemzip = _useFemzip;
-  this->db_nodes = new DB_Nodes();
+  this->db_nodes = new DB_Nodes(this);
   this->db_parts = new DB_Parts();
   this->db_elements = new DB_Elements(this,this->db_nodes,this->db_parts);
   this->db_nodes->set_db_elements(this->db_elements);

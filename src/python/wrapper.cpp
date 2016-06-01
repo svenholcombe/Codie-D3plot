@@ -596,14 +596,30 @@ extern "C" {
 
   /* CD_Node FUNCTION get_coords */
   static PyObject *
-  CD_Node_get_coords(CD_Node* self){
+  CD_Node_get_coords(CD_Node* self, PyObject *args, PyObject *kwds){
 
     if(self->node == NULL){
       PyErr_SetString(PyExc_AttributeError,"Pointer to node is NULL.");
       return NULL;
     }
+    
+    int iTimestep = 0;
+    static char *kwlist[] = {"iTimestep",NULL}; // TODO Deprecated!
+    
+    if (! PyArg_ParseTupleAndKeywords(args, kwds, "|i", kwlist, &iTimestep)){
+        return NULL;
+    }
 
-    vector<float> coords = self->node->get_coords();
+    vector<float> coords;
+    try{
+      coords = self->node->get_coords(iTimestep);
+    } catch (const char* e){
+      PyErr_SetString(PyExc_RuntimeError, e);
+      return NULL;
+    } catch (string e){
+      PyErr_SetString(PyExc_RuntimeError, e.c_str());
+      return NULL;
+    }
 
     int check = 0;
     PyObject* coords_list = PyList_New(coords.size());
@@ -616,8 +632,7 @@ extern "C" {
       PyErr_SetString(PyExc_RuntimeError, "Developer Error during assembly of coords list.");
       return NULL;
     }
-
-
+    
     return coords_list;
 
   }

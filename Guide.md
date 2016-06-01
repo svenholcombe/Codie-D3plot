@@ -82,11 +82,11 @@ The **Node** class has the following functions:
 
 *return: the node id.*
 
-**node.get_coords()**
+**node.get_coords(int iTimestep = 0)**
 
 *return: (list of floats) 3D-coordinates*
 
-The geometrical coordinates of the node. Does not have to be loaded from the state files.
+The geometrical coordinates of the node. Coordinates can also be loaded from different timesteps, in which case displacements must be loaded though (see d3plot.read_states). iTimestep may also be negative to access coordinates backwards (e.g. -1 for last timestep), similar to python array syntax.
 
 **node.get_disp()**
 

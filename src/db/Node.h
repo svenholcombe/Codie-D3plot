@@ -35,7 +35,7 @@ class Node {
 
   // Getter
   int get_nodeID();
-  vector<float> get_coords();
+  vector<float> get_coords(int iTimestep = 0);
   set<Element*> get_elements();
   vector< vector<float> > get_disp();
   vector< vector<float> > get_vel();

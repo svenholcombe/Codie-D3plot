@@ -2,16 +2,18 @@
 #include <string>
 #include "DB_Elements.h"
 #include "DB_Nodes.h"
+#include "../dyna/d3plot.h"
 #include "Node.h"
 #include "../utility/TextUtility.h"
 
 /*
  * Constructor.
  */
-DB_Nodes::DB_Nodes(){
+DB_Nodes::DB_Nodes(D3plot* d3plot){
 
   this->nodesByIndex = map<int,Node*>();
   this->nodesByID = map<int,Node*>();
+  this->d3plot = d3plot;
 
 }
 
@@ -92,6 +94,12 @@ void DB_Nodes::set_db_elements(DB_Elements* _db_elements){
   this->db_elements = _db_elements;
 }
 
+/*
+ * Get the owning d3plot of the db.
+ */
+D3plot* DB_Nodes::get_d3plot(){
+   return this->d3plot;
+}
 
 /*
  * get the element db.
