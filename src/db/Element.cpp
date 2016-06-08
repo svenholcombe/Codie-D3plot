@@ -3,7 +3,7 @@
 #include <algorithm> // std::max
 #include <cmath>        // std::abs
 #include <string>
-#include "../dyna/D3plot.h"
+#include "../dyna/d3plot.h"
 #include "Element.h"
 #include "Node.h"
 #include "DB_Nodes.h"
